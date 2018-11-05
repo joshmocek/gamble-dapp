@@ -28,6 +28,7 @@ contract Gamble {
     function _startOver() private {
         totalPlayers = 0;
         totalAmountBet = 0;
+        nonce = 0;
         for(uint i = 0; i < amountOfNumbers; i++){
             totalBetColor[i] = 0;
         }
