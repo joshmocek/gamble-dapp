@@ -49,13 +49,11 @@ contract Gamble {
     
     function _whoWon() private {
         uint winningNumber = random();
-        uint totalPot = totalAmountBet * (1 - houseCut/100);
-        uint winningPot = totalBetColor[winningNumber];
-        uint leftovers = totalPot - winningPot;
+        uint leftovers = (totalAmountBet * (1 - houseCut/100)) - totalBetColor[winningNumber];
         for (uint i = 1; i <= totalPlayers; i++){
             address addr = playerAddress[i];
             if(ownerBetColor[addr] == winningNumber){
-                _playerWon(addr, ownerBetAmount[addr], winningPot, leftovers);
+                _playerWon(addr, ownerBetAmount[addr], totalBetColor[winningNumber], leftovers);
             }
             delete ownerBetCount[addr];
             delete ownerBetColor[addr];
@@ -71,5 +69,4 @@ contract Gamble {
         balanceOf[_addr] = balanceOf[_addr].add(payout);                    
         balanceOf[address(this)] = balanceOf[address(this)].sub(payout);
     }
-    
 }
